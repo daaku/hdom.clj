@@ -63,3 +63,14 @@
         [tag attrs content] (add-class input "d")]
     (is (= tag (first input)))
     (is (= nil (:class attrs)))))
+
+(deftest remove-existing-class
+  (let [input [:a#b.c.d]
+        [tag attrs content] (remove-class input "c")]
+    (is (= "d" (:class attrs)))))
+
+(deftest remove-non-existing-class
+  (let [input [:a#b.c.d]
+        [tag attrs content] (remove-class input "e")]
+    (is (= tag (first input)))
+    (is (= nil (:class attrs)))))

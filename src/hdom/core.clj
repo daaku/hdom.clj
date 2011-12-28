@@ -44,15 +44,21 @@
     [memo []]
     elements))
 
-(defn- add-class-string [class existing]
-  (str existing " " class))
-
 (def ^{:private true} class-regex
   (memoize (fn [class] (java.util.regex.Pattern/compile (str " " class " ")))))
 
+(defn- pad-class [class]
+  (str " " class " "))
+
+(defn- add-class-string [class existing]
+  (str existing " " class))
+
+(defn- remove-class-string [class existing]
+  (trim (clojure.string/replace (pad-class existing) (class-regex class) "")))
+
 (defn has-class [element class]
   (let [[tag attrs content] (normalize-element element)]
-    (boolean (re-seq (class-regex class) (str " " (:class attrs) " ")))))
+    (boolean (re-seq (class-regex class) (pad-class (:class attrs))))))
 
 (defn add-class [element class]
   (if (has-class element class)
@@ -63,4 +69,9 @@
        content])))
 
 (defn remove-class [element class]
-  )
+  (if-not (has-class element class)
+    element
+    (let [[tag attrs content] (normalize-element element)]
+      [tag
+       (assoc attrs :class (remove-class-string class (attrs :class)))
+       content])))
