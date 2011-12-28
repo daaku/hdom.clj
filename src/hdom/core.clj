@@ -44,11 +44,11 @@
     [memo []]
     elements))
 
-(def ^{:private true} class-regex
-  (memoize (fn [class] (java.util.regex.Pattern/compile (str " " class " ")))))
-
 (defn- pad-class [class]
   (str " " class " "))
+
+(def ^{:private true} class-regex
+  (memoize (fn [class] (java.util.regex.Pattern/compile (pad-class class)))))
 
 (defn- add-class-string [class existing]
   (str existing " " class))
