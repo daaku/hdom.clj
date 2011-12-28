@@ -2,7 +2,7 @@
   "Test hdom functionality."
   {:author "Naitik Shah"}
   (:use
-    [hdom.core :only [reduce-elements add-class]]
+    [hdom.core :only [reduce-elements has-class add-class remove-class]]
     [clojure.test :only [deftest testing is]]))
 
 (defn- el-identity [memo el] [memo el])
@@ -44,7 +44,22 @@
     (is (= "f" (:class strong-attrs)))
     (is (= s-content (first strong-content)))))
 
+(deftest has-class-test
+  (is (= true (has-class [:a.b] "b")))
+  (is (= true (has-class [:a.b.c] "b")))
+  (is (= true (has-class [:a {:class "b"}] "b")))
+  (is (= true (has-class [:a {:class " b "}] "b")))
+  (is (= false (has-class [:a] "b")))
+  (is (= false (has-class [:a {:class "abc"}] "b")))
+  (is (= false (has-class [:a {:class "cb "}] "b"))))
+
 (deftest add-new-class
   (let [input [:a#b.c.d]
         [tag attrs content] (add-class input "e")]
     (is (= "c d e" (:class attrs)))))
+
+(deftest add-existing-class
+  (let [input [:a#b.c.d]
+        [tag attrs content] (add-class input "d")]
+    (is (= tag (first input)))
+    (is (= nil (:class attrs)))))

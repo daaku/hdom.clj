@@ -47,12 +47,20 @@
 (defn- add-class-string [class existing]
   (str existing " " class))
 
-(defn add-class [element class]
-  (let [[tag attrs content] (normalize-element element)]
-    [tag (assoc attrs :class (add-class-string class (attrs :class))) content]))
-
-(defn remove-class [element class]
-  )
+(def ^{:private true} class-regex
+  (memoize (fn [class] (java.util.regex.Pattern/compile (str " " class " ")))))
 
 (defn has-class [element class]
+  (let [[tag attrs content] (normalize-element element)]
+    (boolean (re-seq (class-regex class) (str " " (:class attrs) " ")))))
+
+(defn add-class [element class]
+  (if (has-class element class)
+    element
+    (let [[tag attrs content] (normalize-element element)]
+      [tag
+       (assoc attrs :class (add-class-string class (attrs :class)))
+       content])))
+
+(defn remove-class [element class]
   )
