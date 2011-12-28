@@ -45,7 +45,7 @@
     elements))
 
 (defn- add-class-string [class existing]
-  (str class " " existing))
+  (str existing " " class))
 
 (defn add-class [element class]
   (let [[tag attrs content] (normalize-element element)]
