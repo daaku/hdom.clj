@@ -8,7 +8,8 @@
                       dissoc-attr
                       has-class
                       add-class
-                      remove-class]]
+                      remove-class
+                      prepend-child]]
     [clojure.test :only [deftest testing is]]))
 
 (defn- el-identity [memo el] [memo el])
@@ -98,3 +99,9 @@
         [tag attrs content] (remove-class input "e")]
     (is (= tag (first input)))
     (is (= nil (:class attrs)))))
+
+(deftest prepend-child-test
+  (let [input [:a "bar"]
+        [tag attrs content] (prepend-child input "foo")]
+    (is (= "foo" (first content)))
+    (is (= "bar" (last content)))))

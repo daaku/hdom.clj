@@ -80,3 +80,7 @@
   (if-not (has-class element class)
     element
     (update-attr element :class #(remove-class-string class %))))
+
+(defn prepend-child [parent child]
+  (let [[tag attrs content] (normalize-element parent)]
+    [tag attrs (cons child content)]))
