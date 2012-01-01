@@ -44,6 +44,17 @@
     [memo []]
     elements))
 
+(defn update-attr [element name f]
+  (let [[tag attrs content] (normalize-element element)]
+    [tag (assoc attrs name (f (attrs name))) content]))
+
+(defn set-attr [element name value]
+  (update-attr element name (fn [_] value)))
+
+(defn dissoc-attr [element name]
+  (let [[tag attrs content] (normalize-element element)]
+    [tag (dissoc attrs name) content]))
+
 (defn- pad-class [class]
   (str " " class " "))
 
@@ -63,15 +74,9 @@
 (defn add-class [element class]
   (if (has-class element class)
     element
-    (let [[tag attrs content] (normalize-element element)]
-      [tag
-       (assoc attrs :class (add-class-string class (attrs :class)))
-       content])))
+    (update-attr element :class #(add-class-string class %))))
 
 (defn remove-class [element class]
   (if-not (has-class element class)
     element
-    (let [[tag attrs content] (normalize-element element)]
-      [tag
-       (assoc attrs :class (remove-class-string class (attrs :class)))
-       content])))
+    (update-attr element :class #(remove-class-string class %))))
