@@ -2,8 +2,6 @@
   "Manipulate hiccup data as DOM nodes. This lets you add child nodes, modify
   attributes and iterate/reduce nodes."
   {:author "Naitik Shah"}
-  (:require
-    [clojure.tools.logging])
   (:use
     [clojure.string :only [join trim]]))
 
