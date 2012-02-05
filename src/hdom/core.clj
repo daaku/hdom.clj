@@ -1,5 +1,9 @@
 (ns hdom.core
-  "Manipulate hiccup data as DOM nodes. This lets you add child nodes, modify
+  "<a href='http://travis-ci.org/nshah/hdom.clj'>
+  <img src='https://secure.travis-ci.org/nshah/hdom.clj.png'>
+  </a>
+
+  Manipulate hiccup data as DOM nodes. This lets you add child nodes, modify
   attributes and iterate/reduce nodes."
   {:author "Naitik Shah"}
   (:use
