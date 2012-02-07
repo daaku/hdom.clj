@@ -3,6 +3,7 @@
   :author "Naitik Shah <n@daaku.org>"
   :url "https://github.com/nshah/hdom.clj"
   :repl-init hdom.repl
+  :checksum-deps true
   :exclusions [org.clojure/clojure]
   :dependencies
     [[org.clojure/clojure "1.3.0"]]
