@@ -9,6 +9,6 @@
     [[org.clojure/clojure "1.3.0"]]
   :dev-dependencies
     [[auto-reload "1.0.2"]
-     [lein-marginalia "0.7.0-SNAPSHOT"]
+     [lein-marginalia "0.7.0-20111019.122151-1"]
      [org.clojure/tools.logging "0.2.3"]
-     [vimclojure/server "2.3.0-SNAPSHOT"]])
+     [vimclojure/server "2.3.1"]])
